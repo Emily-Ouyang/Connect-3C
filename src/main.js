@@ -4,7 +4,7 @@ import VueAxios from 'vue-axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import * as bootstrap from 'bootstrap';
-import 'bootstrap/dist/js/bootstrap.js';
+import jQuery from 'jquery';
 import App from './App.vue';
 import router from './router';
 import { currency } from './methods/filters';
@@ -20,6 +20,8 @@ app.config.globalProperties.$filters = {
 app.config.globalProperties.$httpMessageState = $httpMessageState;
 
 window.bootstrap = bootstrap;
+
+window.$ = window.jQuery = jQuery;
 
 app.use(VueAxios,axios);
 

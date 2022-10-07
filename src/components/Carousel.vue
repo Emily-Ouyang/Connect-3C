@@ -8,13 +8,13 @@
 
   <div class="carousel-inner" ref="storeCarousel">
     <div class="carousel-item active">
-      <img src="~@/../src/assets/img/carousel-banner1.jpg" class="d-block carousel-img">
+      <img src="~@/assets/img/carousel-banner1.jpg" class="d-block carousel-img">
     </div>
     <div class="carousel-item">
-      <img src="~@/../src/assets/img/carousel-banner2.jpg" class="d-block carousel-img">
+      <img src="~@/assets/img/carousel-banner2.jpg" class="d-block carousel-img">
     </div>
     <div class="carousel-item">
-      <img src="~@/../src/assets/img/carousel-banner3.jpg" class="d-block carousel-img">
+      <img src="~@/assets/img/carousel-banner3.jpg" class="d-block carousel-img">
     </div>
   </div>
 

@@ -12,7 +12,7 @@
 
       <div class="modal-body">
         <div class="container">
-            <from class="row justify-content-center">
+            <form class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="mb-4">
 	      <label for="inputEmail" class="sr-only">帳號</label>
@@ -54,7 +54,7 @@
 			</div>
 		</div>
     </div>
-</from>
+</form>
 </div>
 </div>
 

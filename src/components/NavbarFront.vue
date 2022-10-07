@@ -4,7 +4,7 @@
 <nav class="navbar navbar-expand-lg navbar-light store-nav fixed-top">
   <div class="container-fluid px-5">
     <router-link class="navbar-brand" to="/">
-      <img src="~@/../src/assets/img/icon.jpg" class="navbar-icon">
+      <img src="~@/assets/img/icon.jpg" class="navbar-icon">
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
 </div>
 </nav>
 </template>
-  
+
 <style>
     /* 導覽列樣式設定 */
     .store-nav {

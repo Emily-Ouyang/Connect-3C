@@ -27,27 +27,27 @@
             </label>
             <input type="file" id="customFile" class="form-control"
             ref="fileInput" @change="uploadFile">
-            <!-- <input type="file" id="customFile2" class="form-control"
-            ref="fileInput2" @change="uploadFile2"> -->
           </div>
-          <img class="img-fluid" :src="tempProduct.imageUrl" alt="">
-          
+
+          <img class="img-fluid" :src="tempProduct.imageUrl">
+
           <!-- 延伸技巧，多圖 -->
-          <!-- <div class="mt-5" v-if="tempProduct.imagesUrl">
-            <div v-for="(item,key) in tempProduct.imagesUrl" class="mb-3 input-group" :key="item">
+          <div class="mt-5" v-if="tempProduct.images">
+            <div v-for="(image,key) in tempProduct.images" class="mb-3 input-group" :key="key">
               <input type="url" class="form-control form-control"
-              placeholder="請輸入連結" v-model="tempProduct.imagesUrl[key]">
-              <button type="button" class="btn btn-outline-danger" @click="delImage">
+              placeholder="請輸入連結" v-model="tempProduct.images[key]">
+              <button type="button" class="btn btn-outline-danger" @click="tempProduct.images.splice(key,1)">
                 移除
               </button>
-            </div> -->
-            <div>
-              <button class="btn btn-outline-primary btn-sm d-block w-100">
+            </div>
+
+            <div v-if="tempProduct.images[tempProduct.images.length - 1] || !tempProduct.images.length">
+              <button class="btn btn-outline-primary btn-sm d-block w-100" @click="tempProduct.images.push('')">
                 新增圖片
               </button>
             </div>
           </div>
-        <!-- </div> -->
+        </div>
 
         <div class="col-sm-8">
           <div class="mb-3">
@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import Modal from 'bootstrap/js/dist/modal';
+import modalMixin from '@/mixins/modalMixin';
 
 export default {
     props: {
@@ -153,10 +153,10 @@ export default {
         // 將外層資料傳入
         this.tempProduct = this.product;
 
-      //   // 延伸技巧，多圖
-      //   if(!this.tempProduct.imagesUrl) {
-      //   this.tempProduct.imagesUrl = [];
-      // }
+      // 延伸技巧，多圖
+        if(!this.tempProduct.images) {
+        this.tempProduct.images = [];
+      }
       }
     },
 
@@ -186,53 +186,10 @@ export default {
           if (response.data.success) {
           // 將遠端路徑儲存至tempProduct中
           this.tempProduct.imageUrl = response.data.imageUrl;
-          console.log(this.tempProduct.imageUrl);
         }
       });
-      },
-
-      // uploadFile2() {
-      //     // 將上傳的檔案取出
-      //     const uploadedFile2 = this.$refs.fileInput2.files[0];
-
-      //     // 建立FormData格式內容
-      //     const formData = new FormData();
-
-      //     // 增加欄位至表單中
-      //     formData.append('file-to-upload',uploadedFile2);
-
-      //     // API路徑
-      //     const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
-
-      //     // 用form表單格式來發送內容
-      //     this.$http.post(url,formData).then((response) => {
-      //     if (response.data.success) {
-      //     // 將遠端路徑儲存至tempProduct中
-      //     this.tempProduct.imageUrl = response.data.imageUrl;
-      //     console.log(this.tempProduct.imageUrl);
-      //   }
-      // });
-      // },
-
-      // // 移除圖片
-      // delImage() {
-      //   this.tempProduct.imagesUrl.splice(key,1);
-      // },
-
-      showModal() {
-            // 用show()這個方法將modal呈現在畫面上
-            this.modal.show();
-        },
-        
-        hideModal() {
-            // 用hide()這個方法將modal隱藏在畫面上
-            this.modal.hide();
-        }
-    },
-
-    mounted() {
-        // 將Modal實體化，實體會指向外層的modal
-        this.modal = new Modal(this.$refs.modal);       
     }
+  },
+  mixins: [modalMixin]
 };
 </script>
