@@ -10,8 +10,9 @@
     
     <div class="collapse navbar-collapse justify-content-lg-end" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" aria-current="page" href="#">查看訂單</a>
-        <a class="nav-link" href="#">優惠券</a>
+        <router-link class="nav-link" to="/dashboard/products">產品列表</router-link>
+        <router-link class="nav-link" to="/dashboard/orders">查看訂單</router-link>
+        <router-link class="nav-link" to="/dashboard/coupons">優惠券</router-link>
         <a class="nav-link" href="#" @click.prevent="logout">登出後台</a>
     </div>
   </div>
@@ -81,5 +82,5 @@ export default {
             });
         }
     }
-}
+};
 </script>

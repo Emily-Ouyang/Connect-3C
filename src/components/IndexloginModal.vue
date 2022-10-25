@@ -1,13 +1,13 @@
 <template>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="indexLoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content border-0">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="exampleModalLabel">
-            <span>登入會員</span>
+            <span><i class="bi bi-person-heart"></i> 登入會員</span>
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close bg-white mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body">
@@ -60,10 +60,10 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            放棄登入
+          <i class="bi bi-person-x-fill"></i> 放棄登入
         </button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-            點我登入
+          <i class="bi bi-person-check-fill"></i> 好想登入
         </button>
       </div>
     </div>

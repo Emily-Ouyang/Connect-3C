@@ -1,8 +1,9 @@
 <template>
-    <div class="container mt-5">
+	<div class="login-wrap min-vh-100">
+    <div class="container">
 	<form class="row justify-content-center" @submit.prevent="signIn">
 	  <div class="col-md-6">
-	    <h1 class="h3 mb-5 font-weight-normal text-center login-text">登入後台</h1>
+	    <h1 class="h3 my-5 font-weight-normal text-center text-primary"><i class="bi bi-person-workspace"></i> 登入後台</h1>
 	    <div class="mb-4">
 	      <label for="inputEmail" class="sr-only">帳號</label>
 	      <input
@@ -46,17 +47,26 @@
 		</div>
 
 	    <div class="d-grid gap-2 col-6 mx-auto text-center mt-5">
-	      <button class="btn btn-primary" type="submit">登入</button>
+			<button class="btn btn-primary" type="submit">
+				<i class="bi bi-person-check-fill"></i> 登入
+		    </button>
+	    </div>
+
+		<div class="d-grid gap-2 col-6 mx-auto text-center mt-4">
+			<button class="btn btn-primary" @click.prevent="goBack">
+				<i class="bi bi-arrow-clockwise"></i> 返回首頁
+		    </button>
 	    </div>
 	  </div>
 	</form>
 </div>
+</div>
 </template>
 
 <style>
-	/* 標題文字顏色 */
-	.login-text {
-		color: MidnightBlue;
+    /* 背景圖片 */
+    .login-wrap {
+		background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
 	}
 
 	/* 清除超連結底線 */
@@ -101,6 +111,11 @@ export default {
 				}
             });
         },
-    },
+
+		goBack() {
+			// 轉址到首頁
+			this.$router.push('/');
+		}
+    }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-<IndexloginModal></IndexloginModal>
+<indexLoginModal></indexLoginModal>
 
 <nav class="navbar navbar-expand-lg navbar-light store-nav fixed-top">
   <div class="container-fluid px-5">
@@ -12,9 +12,9 @@
     
     <div class="collapse navbar-collapse justify-content-lg-end" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <router-link class="nav-link" aria-current="page" to="/user/cart">商城</router-link>
-        <router-link class="nav-link" aria-current="page" to="/login">登入後台</router-link>
-        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">登入會員</a>
+        <router-link class="nav-link" to="/user/cart">商城</router-link>
+        <router-link class="nav-link" to="/login">後台入口</router-link>
+        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#indexLoginModal"><i class="bi bi-person-circle"></i></a>
     </div>
   </div>
 </div>
@@ -65,11 +65,11 @@
 </style>
 
 <script>
-import IndexloginModal from '@/components/IndexloginModal.vue';
+import indexLoginModal from '@/components/indexLoginModal.vue';
 
 export default {
   components: {
-    IndexloginModal
+    indexLoginModal
   }
 };
 </script>

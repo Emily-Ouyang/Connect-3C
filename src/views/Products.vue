@@ -43,13 +43,19 @@
 
       <td>
         <div class="btn-group">
-          <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">編輯</button>
-          <button class="btn btn-outline-danger btn-sm" @click="openDelProductModal(item)">刪除</button>
+          <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+
+          <button class="btn btn-outline-danger btn-sm" @click="openDelProductModal(item)">
+            <i class="bi bi-trash"></i>
+          </button>
         </div>
       </td>
     </tr>
   </tbody>
 </table>
+
 <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
 <ProductModal ref="productModal" :product="tempProduct" @update-product="updateProduct"></ProductModal>
 <DelModal :item="tempProduct" ref="delModal" @del-item="delProduct"></DelModal>
@@ -294,14 +300,14 @@ export default {
           this.emitter.emit('push-message', {
             // 相關資料
             style: 'success',
-            title: '恭喜您!更新產品成功!'
+            title: '恭喜您!更新成功!'
           });
         } 
           // 假設更新失敗時
           else {
             this.emitter.emit('push-message', {
             style: 'danger',
-            title: 'Oh No!更新產品失敗!',
+            title: 'Oh No!更新失敗!',
             // 後端傳送過來失敗的訊息內容，透過join的方式把陣列內容一一取出，並且在中間補上逗號的形式
             // 將所有訊息補到content中
             content: response.data.message.join('、')
@@ -334,7 +340,7 @@ export default {
         this.emitter.emit('push-message', {
         // 相關資料
         style: 'success',
-        title: '恭喜您!刪除產品成功!'
+        title: '恭喜您!刪除成功!'
       });
           });
       }

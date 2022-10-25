@@ -6,7 +6,7 @@ export default {
             // 用show()這個方法將modal呈現在畫面上
             this.modal.show();
         },
-        
+
         hideModal() {
             // 用hide()這個方法將modal隱藏在畫面上
             this.modal.hide();
