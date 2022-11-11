@@ -40,19 +40,19 @@
 </template>
 
 <style>
-    /* footer背景顏色 */
-    .footer-bg {
-        background: #ffffff;
+/* footer背景顏色 */
+.footer-bg {
+    background: #ffffff;
     }
 
-    /* footer icon寬高設定 */
-    .footer-icon {
-        max-width: 150px;
-        height: auto;
+/* footer icon寬高設定 */
+.footer-icon {
+    max-width: 150px;
+    height: auto;
     }
 
-    /* 版權區塊文字顏色 */
-    .copy-text {
-        color: #ffffff;
+/* 版權區塊文字顏色 */
+.copy-text {
+    color: #ffffff;
     }
 </style>

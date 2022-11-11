@@ -7,46 +7,16 @@
   </Loading>
 
     <div class="container userPage">
-      <div class="row">
-        <div class="col-md-4" v-for="item in products" :key="item.id">
-          <div class="card mb-4">
-            <div style="height: 350px; background-size: cover; 
-                        background-position: center"
-                 :style="{backgroundImage: `url(${item.imageUrl})`}">
-            </div>
 
-            <div class="card-body text-center">
-              <h5 class="card-title">{{ item.title }}</h5>
-              <br>
+      <div class="dropdown text-end mb-3">
+      <a type="button position-relative p-2" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+        <i class="bi bi-cart-fill"></i>
+      </a>
+      <div class="dropdown-menu p-2 overflow-auto">
+        <p class="text-center mt-2 mb-5">購物車清單</p>
 
-              <del class="h6" v-if="item.price">
-                原價 {{ item.origin_price }} 元
-              </del>
-              <br>
-
-              <p class="h5" v-if="item.price">
-                現在只要 {{ item.price }} 元
-              </p>
-
-                <div class="btn-group btn-group-sm mt-3">
-                  <button type="button" class="btn btn-warning" @click.prevent="getProduct(item.id)">
-                    <i class="bi bi-box-arrow-up-right"></i> 商品詳情
-                  </button>
-
-                  <!-- 當 loadingItem 屬性中儲存的 id 與 此商品 id 一致時，按鈕呈現禁用狀態 -->
-                  <button type="button" class="btn btn-danger" @click.prevent="addCart(item.id)"
-                          :disabled="this.status.loadingItem === item.id">
-                          <div v-if="this.status.loadingItem === item.id" class="spinner-grow spinner-grow-sm text-primary" role="status">
-                          <span class="visually-hidden">Loading...</span>
-                          </div>
-                          <i class="bi bi-cart-plus"></i> 手刀購買
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
           <!-- 購物車列表 -->
-          <div class="col-md-5">
+          <div class="col-md-12">
             <div class="sticky-top">
               <table class="table align-middle">
                 <thead>
@@ -63,7 +33,7 @@
                 <td>
                   <button type="button" class="btn btn-outline-danger btn-sm"
                           :disabled="status.loadingItem === item.id"
-                          @click="removeCartItem(item.id)">
+                          @click.prevent="removeCartItem(item.id)">
                           <i class="bi bi-trash3-fill"></i>
                   </button>
                 </td>
@@ -104,18 +74,64 @@
           <div class="input-group mb-3 input-group-sm">
             <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">
+              <button class="btn btn-outline-secondary" type="button" @click.prevent="addCouponCode">
                 套用優惠碼
               </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12" v-for="item in products" :key="item.id">
+          <div class="card mb-4">
+            <div style="height: 350px; background-size: cover; 
+                        background-position: center;"
+                 :style="{backgroundImage: `url(${item.imageUrl})`}">
+            </div>
+
+            <div class="card-body text-center mt-2">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <br>
+
+              <del class="h6" v-if="item.price">
+                市價 {{ item.origin_price }} 元
+              </del>
+              <br>
+
+              <p class="h5" v-if="item.price">
+                限時下殺 {{ item.price }} 元
+              </p>
+
+                <div class="btn-group btn-group-sm mt-3">
+                  <button type="button" class="btn btn-warning" @click.prevent="getProduct(item.id)">
+                    <i class="bi bi-box-arrow-up-right"></i> 商品詳情
+                  </button>
+
+                  <!-- 當 loadingItem 屬性中儲存的 id 與 此商品 id 一致時，按鈕呈現禁用狀態 -->
+                  <button type="button" class="btn btn-danger" @click.prevent="addCart(item.id)"
+                          :disabled="this.status.loadingItem === item.id">
+                          <div v-if="this.status.loadingItem === item.id" class="spinner-grow spinner-grow-sm text-primary" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                          </div>
+                          <i class="bi bi-cart-plus"></i> 心動購買
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 </template>
 
 <style>
+/* 向下推125px，避免內容被navbar遮擋到 */
+.userPage {
+    padding-top: 125px;
+  }
+
   /* 讀取視覺效果樣式 */
 @keyframes ldio-4g11ls18ra {
   0% {
@@ -244,10 +260,6 @@
 }
 
 .ldio-4g11ls18ra div { box-sizing: content-box; }
-
-.userPage {
-  padding-top: 125px;
-  }
 </style>
 
 <script>
@@ -268,9 +280,12 @@ export default {
     methods: {
       getProducts() {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+
         this.isLoading = true;
+
         this.$http.get(url).then((response) => {
           this.products = response.data.products;
+
           this.isLoading = false;
         })
       },
@@ -282,7 +297,7 @@ export default {
       addCart(id) {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
 
-        // 按下手刀購買的按鈕時，呈現讀取狀態
+        // 按下心動購買的按鈕時，呈現讀取狀態
         this.status.loadingItem = id;
 
         const cart = {
@@ -294,12 +309,14 @@ export default {
         .then((res) => {
           // 加入購物車動作完成後，取消讀取狀態
           this.status.loadingItem = '';
-          console.log(res);
+
+          this.getCart();
         })
       },
 
       removeCartItem(id) {
       this.status.loadingItem = id;
+
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
 
       this.isLoading = true;
@@ -325,10 +342,9 @@ export default {
       const cart = {
         product_id: item.product_id,
         qty: item.qty
-      }
+      };
 
       this.$http.put(url,{ data: cart }).then((res) => {
-        console.log(res);
         this.status.loadingItem = '';
 
         this.getCart();
@@ -341,8 +357,25 @@ export default {
       this.isLoading = true;
 
       this.$http.get(url).then((response) => {
-        console.log(response);
         this.cart = response.data.data;
+
+        this.isLoading = false;
+      });
+    },
+
+      addCouponCode() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+
+      const coupon = {
+        code: this.coupon_code,
+      };
+
+      this.isLoading = true;
+
+      this.$http.post(url,{ data: coupon }).then((response) => {
+        this.$httpMessageState(response,'加入優惠券');
+
+        this.getCart();
 
         this.isLoading = false;
       });

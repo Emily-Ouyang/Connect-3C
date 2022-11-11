@@ -1,9 +1,9 @@
 <template>
     <div class="wrap">
     <NavbarFront></NavbarFront>
-    <div class="container-fluid mt-3 position-relative">
     <ToastMessages></ToastMessages>
-    <router-view/>
+    <div class="container-fluid my-4 position-relative">
+      <router-view/>
     </div>
     <Footer></Footer>
     </div>
@@ -16,6 +16,12 @@
     /* 固定背景圖(當頁面滾動時，視覺上會有交錯的效果) */
     background-attachment: fixed;
   }
+
+/* 購物車圖示 */
+.bi-cart-fill {
+    font-size: 25px;
+    color: red;
+  }
 </style>
 
 <script>
@@ -24,7 +30,7 @@ import NavbarFront from '@/components/NavbarFront.vue';
 import ToastMessages from '@/components/ToastMessages.vue';
 import Footer from '@/components/Footer.vue';
 
-    export default {
+export default {
       components: {
         NavbarFront,
         ToastMessages,

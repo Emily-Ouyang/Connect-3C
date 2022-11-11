@@ -64,19 +64,19 @@
 </template>
 
 <style>
-    /* 背景圖片 */
-    .login-wrap {
-		background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
-	}
+/* 背景圖片 */
+.login-wrap {
+    background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
+    }
 
-	/* 清除超連結底線 */
-	.forget {
-		text-decoration: none;
-	}
+/* 清除超連結底線 */
+.forget {
+    text-decoration: none;
+    }
 
-	/* 按鈕hover特效(透明度改為0.8) */
-	.btn-primary:hover {
-		opacity: 0.8;
+/* 按鈕hover特效(透明度改為0.8) */
+.btn-primary:hover {
+    opacity: 0.8;
 	}
 </style>
 

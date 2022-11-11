@@ -4,12 +4,12 @@
         :msg="msg"
       />
     </div>
-  </template>
-  
-  <script>
-  import Toast from '@/components/Toast.vue';
-  
-  export default {
+</template>
+
+<script>
+import Toast from '@/components/Toast.vue';
+
+export default {
     components: { Toast },
 
     data() {
@@ -33,4 +33,4 @@
         });
     }
   };
-  </script>
+</script>

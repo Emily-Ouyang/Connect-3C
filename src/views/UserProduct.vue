@@ -13,18 +13,19 @@
           <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
         </ol>
       </nav>
+
       <div class="row justify-content-center">
-        <article class="col-lg-7 col-md-12 col-sm-12">
-          <img :src="product.imageUrl" class="img-fluid mb-3 product-img">
+        <article class="col-lg-7 col-md-12 col-sm-12 mt-3 mb-5">
+          <img :src="product.imageUrl" class="img-fluid">
         </article>
 
         <div class="col-lg-5 col-md-12 col-sm-12 px-5">
-          <h2>{{ product.title }}</h2>
-          <div>{{ product.content }}</div>
-          <div>{{ product.description }}</div>
+          <h2 class="mb-4">{{ product.title }}</h2>
+          <pre class="mb-5">{{ product.description }}</pre>
+          <pre class="mb-4">{{ product.content }}</pre>
           <div class="h5" v-if="!product.price">{{ product.origin_price }} 元</div>
-          <del class="h6" v-if="product.price">原價 {{ product.origin_price }} 元</del>
-          <div class="h5" v-if="product.price">現在只要 {{ product.price }} 元</div>
+          <del class="h6" v-if="product.price">市價 {{ product.origin_price }} 元</del>
+          <div class="h5" v-if="product.price">限時下殺 {{ product.price }} 元</div>
           <hr>
           <div class="input-group input-group-sm mb-3">
             <input type="number" class="form-control"
@@ -33,8 +34,8 @@
                    <div class="input-group-text">/ {{ product.unit }}</div>
           </div>
 
-          <button type="button" class="btn btn-danger btn-lg" @click.prevent="addToCart(product.id)">
-            <i class="bi bi-cart-plus"></i> 手刀購買
+          <button type="button" class="btn btn-danger btn-lg" @click.prevent="addToCart(product.id,qty)">
+                  <i class="bi bi-cart-plus"></i> 帶商品回家
           </button>
         </div>
       </div>
@@ -208,14 +209,16 @@
 
         this.$http.get(api).then((response) => {
           this.isLoading = false;
+
           if (response.data.success) {
             this.product = response.data.product;
           }
         });
       },
 
-      addToCart(id,qty=1) {
+      addToCart(id,qty) {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+
         const cart = {
           product_id: id,
           qty
@@ -227,8 +230,6 @@
           this.isLoading = false;
 
           this.$httpMessageState(response,'加入購物車');
-
-          this.$router.push('/user/cart');
         });
       }
     },

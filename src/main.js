@@ -9,12 +9,14 @@ import jQuery from 'jquery';
 import App from './App.vue';
 import router from './router';
 import { currency } from './methods/filters';
+import { date } from './methods/filters';
 import $httpMessageState from './methods/pushMessageState';
 
 const app = createApp(App);
 // 全域屬性
 app.config.globalProperties.$filters = {
-    currency
+    currency,
+    date
   };
 
 // 此函式的用途是整合 Ajax 的錯誤事件，統一整理發送給予 Toast 處理

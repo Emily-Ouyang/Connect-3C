@@ -30,61 +30,61 @@
 </template>
 
 <style>
-  /* 輪播區塊向下推125px，避免輪播圖被navbar遮擋到 */
-  .index-carousel {
+/* 輪播區塊向下推125px，避免輪播圖被navbar遮擋到 */
+.index-carousel {
     padding-top: 125px;
   }
 
-  /* 輪播指示器樣式 */
-  .carousel-indicators [data-bs-target] {
+/* 輪播指示器樣式 */
+.carousel-indicators [data-bs-target] {
     border-radius: 50%;
     width: 15px;
     height: 15px;
     background-color: RoyalBlue;   
   }
 
-  .carousel-indicators .active {
+.carousel-indicators .active {
     background-color: MidnightBlue;
   }
 
-  /* 輪播圖寬高設定 */
-  .carousel-img {
+/* 輪播圖寬高設定 */
+.carousel-img {
     max-width: 100%;
     height: auto;
   }
   
-  /* 輪播控制項樣式 */
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-  height: 80px;
-  width: 80px;
-  outline: RoyalBlue;
-  background-size: 100%, 100%;
-  border-radius: 50%;
-  border: 1px solid RoyalBlue;
-  background-image: none;
-}
-
-  .carousel-control-next-icon:after {
-  content: '>';
-  font-size: 50px;
-  color: MidnightBlue;
-}
-
-  .carousel-control-prev-icon:after {
-  content: '<';
-  font-size: 50px;
-  color: MidnightBlue;
-}
-  /* RWD響應式網頁設計 */
-  /* 767px以下時隱藏輪播指示器及輪播控制項 */
-@media(max-width:767px) {
-  .carousel-indicators,
-  .carousel-control-prev,
-  .carousel-control-next {
-    display: none;
+/* 輪播控制項樣式 */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 80px;
+    width: 80px;
+    outline: RoyalBlue;
+    background-size: 100%, 100%;
+    border-radius: 50%;
+    border: 1px solid RoyalBlue;
+    background-image: none;
   }
-}
+
+.carousel-control-next-icon:after {
+    content: '>';
+    font-size: 50px;
+    color: MidnightBlue;
+  }
+
+.carousel-control-prev-icon:after {
+    content: '<';
+    font-size: 50px;
+    color: MidnightBlue;
+  }
+/* RWD響應式網頁設計 */
+/* 767px以下時隱藏輪播指示器及輪播控制項 */
+    @media(max-width:767px) {
+      .carousel-indicators,
+      .carousel-control-prev,
+      .carousel-control-next {
+        display: none;
+      }
+  }
 </style>
 
 <script>

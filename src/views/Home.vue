@@ -118,7 +118,9 @@
     <!-- 維修項目區塊結束 -->
 
   <div class="my-5">
-    <h2 class="text-center mb-4 animated">江湖在走 手機保險要有💪</h2>
+    <h2 class="text-center mb-4 animated">
+      江湖在走 手機保險要有💪
+    </h2>
 
     <div class="container">      
       <div class="row p-3">
@@ -155,12 +157,19 @@
     </div>
   </div>
 
-  <div class="bg-color text-primary animated">
-    <h2 class="text-center pt-5 pb-4 animated">等等!舊手機先別急著丟🚫</h2>
-    <p class="text-center mb-3 animatedX">
-      以舊換新 價格甘心<br>
+  <div class="bg-color animated">
+    <h2 class="text-center pt-5 pb-4 animated">
+      等等!舊手機先別急著丟🚫
+    </h2>
+
+    <h5 class="text-center mb-2 animated">
+      以舊換新 價格甘心
+    </h5>
+
+    <h5 class="text-center mb-5 animatedX">
       舊機換新機 折扣享不停💰
-    </p>
+    </h5>
+
     <img src="~@/assets/img/舊機換新機.png" class="banner-img animated">
   </div>
 

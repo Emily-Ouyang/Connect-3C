@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content border-0">
@@ -9,6 +9,7 @@
             </h5>
             <button type="button" class="btn-close bg-white mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+
           <div class="modal-body">
             <div class="row">
               <div class="col-md-4">
@@ -34,6 +35,7 @@
                   </tbody>
                 </table>
               </div>
+
               <div class="col-md-8">
                 <h3>訂單細節</h3>
                 <table class="table">
@@ -70,6 +72,7 @@
                     </tr>
                   </tbody>
                 </table>
+
                 <h3>選購商品</h3>
                 <table class="table">
                   <thead>
@@ -93,6 +96,7 @@
               </div>
             </div>
           </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
               <i class="bi bi-x-circle-fill"></i> 取消
@@ -107,9 +111,9 @@
 </template>
 
 <script>
-  import modalMixin from '@/mixins/modalMixin';
+import modalMixin from '@/mixins/modalMixin';
 
-  export default {
+export default {
     name: 'orderModal',
 
     props: {

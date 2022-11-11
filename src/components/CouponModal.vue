@@ -41,6 +41,7 @@
               </div>
             </div>
           </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               <i class="bi bi-x-circle-fill"></i> 取消更新
@@ -76,8 +77,8 @@ export default {
     watch: {
       coupon() {
         this.tempCoupon = this.coupon;
+
         // 將時間格式改為 YYYY-MM-DD
-        console.log(this.tempCoupon.due_date);
         const dateAndTime = new Date(this.tempCoupon.due_date * 1000)
           .toISOString().split('T');
         [this.due_date] = dateAndTime;

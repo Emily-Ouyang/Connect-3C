@@ -21,41 +21,41 @@
 </template>
 
 <style>
-  /* 導覽列樣式設定 */
-  .store-nav {
+/* 導覽列樣式設定 */
+.store-nav {
     background: #ffffff;
     box-shadow: 0 3px 3px #c0c0c0;
     padding: 5px;
   }
 
-  /* icon寬度設定 */
-  .navbar-icon {
+/* icon寬度設定 */
+.navbar-icon {
     max-width: 140px;
   }
 
-  /* icon hover特效 */
-  .store-nav .navbar-icon:hover {
+/* icon hover特效 */
+.store-nav .navbar-icon:hover {
     opacity: 0.6;
     transform: scale(1.1);
   }
 
-  /* 導覽列超連結樣式設定 */
-  .navbar-nav .nav-link {
+/* 導覽列超連結樣式設定 */
+.navbar-nav .nav-link {
     color: MidnightBlue;
     padding: 20px 15px;
       /* 清除hover的浮動 */
     border-bottom: 4px solid transparent;
   }
 
-  /* 導覽列超連結hover特效 */
-  .navbar-nav .nav-link:hover {
+/* 導覽列超連結hover特效 */
+.navbar-nav .nav-link:hover {
     opacity: 0.9;
     color: SkyBlue;
     transition: all 0.4s;
     border-bottom: 4px solid SkyBlue;
   }
-  /* RWD響應式網頁設計 */
-  /* 992px以下導覽列選單居中 */
+/* RWD響應式網頁設計 */
+/* 992px以下導覽列選單居中 */
   @media(max-width:992px) {
       .navbar-nav {
           text-align: center;
