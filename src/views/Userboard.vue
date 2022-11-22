@@ -1,5 +1,8 @@
 <template>
     <div class="wrap">
+    <div class="coupon-bar text-center bg-primary text-white">
+      輸入優惠碼:coupon50 享全館商品50%折扣
+    </div>
     <NavbarFront></NavbarFront>
     <ToastMessages></ToastMessages>
     <div class="container-fluid my-4 position-relative">
@@ -17,10 +20,15 @@
     background-attachment: fixed;
   }
 
+/* 優惠碼公告區塊樣式設定 */
+.coupon-bar {
+  padding-top: 125px;
+}
+
 /* 購物車圖示 */
 .bi-cart-fill {
     font-size: 25px;
-    color: red;
+    color: MidnightBlue;
   }
 </style>
 

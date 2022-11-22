@@ -257,6 +257,7 @@ export default {
 
           // 儲存狀態
           this.isNew = isNew;
+
           const productComponent = this.$refs.productModal;
 
           productComponent.showModal();
@@ -269,7 +270,8 @@ export default {
           // 發送到遠端
           // 新增產品
           // API路徑
-          let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;   
+          let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`; 
+
           // API方法
           let httpMethod = 'post';
 
@@ -284,6 +286,7 @@ export default {
           }
 
           const productComponent = this.$refs.productModal;
+
           // 送出API
           this.$http[httpMethod](api,{data:this.tempProduct}).then((response) => {
           // 關閉彈出視窗
@@ -319,13 +322,16 @@ export default {
         // 開啟刪除彈出視窗
         openDelProductModal(item) {
         this.tempProduct = {...item};
+
         const delComponent = this.$refs.delModal;
+
         delComponent.showModal();
         },
 
         // 刪除產品
         delProduct() {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`;
+
         this.$http.delete(url).then((response) => {
         const delComponent = this.$refs.delModal;
 

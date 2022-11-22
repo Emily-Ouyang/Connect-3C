@@ -7,6 +7,83 @@
   </Loading>
 
     <div class="container userPage">
+      <div class="dropdown text-end mb-3">
+      <a type="button position-relative p-2" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+        <i class="bi bi-cart-fill"></i>
+      </a>
+      <div class="dropdown-menu p-2 overflow-auto">
+        <p class="text-center mt-2 mb-5">購物車清單</p>
+
+          <!-- 購物車列表 -->
+          <div class="col-md-12">
+            <div class="sticky-top">
+              <table class="table align-middle">
+                <thead>
+                  <tr>
+                <th></th>
+                <th>品名</th>
+                <th style="width: 110px">數量</th>
+                <th>單價</th>
+                  </tr>
+                </thead>
+            <tbody>
+            <template v-if="cart.carts">
+              <tr v-for="item in cart.carts" :key="item.id">
+                <td>
+                  <button type="button" class="btn btn-outline-danger btn-sm"
+                          :disabled="status.loadingItem === item.id"
+                          @click.prevent="removeCartItem(item.id)">
+                          <i class="bi bi-trash3-fill"></i>
+                  </button>
+                </td>
+                <td>
+                  {{ item.product.title }}
+                  <div class="text-success" v-if="item.coupon">
+                    已套用優惠券
+                  </div>
+                </td>
+                <td>
+                  <div class="input-group input-group-sm">
+                    <input type="number" class="form-control"
+                           min="1"
+                           :disabled="item.id === status.loadingItem"
+                           @change="updateCart(item)"
+                           v-model.number="item.qty">
+                    <div class="input-group-text">/ {{ item.product.unit }}</div>
+                  </div>
+                </td>
+                <td class="text-end">
+                  <small v-if="cart.final_total !== cart.total" class="text-success">折扣價：</small>
+                  {{ $filters.currency(item.final_total) }}
+                </td>
+              </tr>
+            </template>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="3" class="text-end">總計</td>
+              <td class="text-end">{{ $filters.currency(cart.total) }}</td>
+            </tr>
+            <tr v-if="cart.final_total !== cart.total">
+              <td colspan="3" class="text-end text-success">折扣價</td>
+              <td class="text-end text-success">{{ $filters.currency(cart.final_total) }}</td>
+            </tr>
+            </tfoot>
+          </table>
+          <div class="input-group mb-3 input-group-sm">
+            <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" @click.prevent="addCouponCode">
+                套用優惠碼
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-primary mb-2 w-100" type="button" :disabled="cart.total === 0" @click.prevent="goInfo">結帳去</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><router-link to="/user/cart" class="breadcrumb-item-a">商城</router-link></li>
@@ -30,11 +107,17 @@
           <div class="input-group input-group-sm mb-3">
             <input type="number" class="form-control"
                    min="1"
-                   v-model.number="qty">
+                   v-model.number="qty"
+                   placeholder="請填寫欲購買的數量">
                    <div class="input-group-text">/ {{ product.unit }}</div>
           </div>
 
-          <button type="button" class="btn btn-danger btn-lg" @click.prevent="addToCart(product.id,qty)">
+          <!-- 當 loadingItem 屬性中儲存的 id 與 此商品 id 一致時，按鈕呈現禁用狀態 -->
+          <button type="button" class="btn btn-primary btn-lg" @click.prevent="addToCart(product.id,qty)"
+                  :disabled="this.status.loadingItem === product.id">
+                  <div v-if="this.status.loadingItem === product.id" class="spinner-grow spinner-grow-sm text-white" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                  </div>
                   <i class="bi bi-cart-plus"></i> 帶商品回家
           </button>
         </div>
@@ -43,12 +126,12 @@
   </template>
 
 <style>
-  /* 向下推125px，避免內容被navbar遮擋到 */
+/* 前台頁面內容樣式設定 */
 .userPage {
-  padding-top: 125px;
+  padding-top: 10px;
   }
 
-  /* 更改breadcrumb樣式 */
+/* 更改breadcrumb樣式 */
 .breadcrumb-item-a {
   color: MidnightBlue;
   text-decoration: none;
@@ -62,7 +145,7 @@
   color: MidnightBlue;
 }
 
-  /* 讀取視覺效果樣式 */
+/* 讀取視覺效果樣式 */
 @keyframes ldio-4g11ls18ra {
   0% {
     opacity: 1;
@@ -197,7 +280,13 @@
     data() {
       return {
         product: {},
-        id: ''
+        id: '',
+        status: {
+          // 對應品項 id
+          loadingItem: ''
+        },
+        cart: {},
+        coupon_code: ''
       }
     },
 
@@ -219,24 +308,103 @@
       addToCart(id,qty) {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
 
+        // 按下帶商品回家的按鈕時，呈現讀取狀態
+        this.status.loadingItem = id;
+
         const cart = {
           product_id: id,
           qty
         };
 
-        this.isLoading = true;
-
         this.$http.post(url,{ data: cart }).then((response) => {
-          this.isLoading = false;
+          // 加入購物車動作完成後，取消讀取狀態
+          this.status.loadingItem = '';
 
-          this.$httpMessageState(response,'加入購物車');
+          this.getCart();
         });
-      }
+      },
+
+      removeCartItem(id) {
+      this.status.loadingItem = id;
+
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
+
+      this.isLoading = true;
+
+      this.$http.delete(url).then((response) => {
+        this.$httpMessageState(response,'移除購物車品項');
+
+        this.status.loadingItem = '';
+
+        this.getCart();
+
+        this.isLoading = false;
+      });
+    },
+
+      updateCart(item) {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+
+      this.isLoading = true;
+
+      this.status.loadingItem = item.id;
+
+      const cart = {
+        product_id: item.product_id,
+        qty: item.qty
+      };
+
+      this.$http.put(url,{ data: cart }).then((res) => {
+        this.status.loadingItem = '';
+
+        this.getCart();
+
+        this.isLoading = false;
+      })
+      },
+
+      getCart() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+
+      this.isLoading = true;
+
+      this.$http.get(url).then((response) => {
+        this.cart = response.data.data;
+
+        this.isLoading = false;
+      });
+    },
+
+      addCouponCode() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+
+      const coupon = {
+        code: this.coupon_code,
+      };
+
+      this.isLoading = true;
+
+      this.$http.post(url,{ data: coupon }).then((response) => {
+        this.$httpMessageState(response,'套用優惠碼');
+
+        this.getCart();
+
+        this.isLoading = false;
+      });
+    },
+
+    goInfo() {
+			// 轉址到填寫個人資料頁面
+			this.$router.push('/user/information');
+		}
     },
 
     created() {
       this.id = this.$route.params.productId;
+
       this.getProduct();
+
+      this.getCart();
     }
   };
 </script>

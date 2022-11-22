@@ -214,27 +214,34 @@ export default {
     methods: {
       openCouponModal(isNew,item) {
         this.isNew = isNew;
+
         if (this.isNew) {
           this.tempCoupon = {
-            due_date: new Date().getTime() / 1000,
+            due_date: new Date().getTime() / 1000
           };
         } else {
           this.tempCoupon = { ...item };
         }
+
         this.$refs.couponModal.showModal();
       },
 
       openDelCouponModal(item) {
         this.tempCoupon = { ...item };
+
         const delComponent = this.$refs.delModal;
+
         delComponent.showModal();
       },
 
       getCoupons() {
         this.isLoading = true;
+
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons`;
+
         this.$http.get(url,this.tempProduct).then((response) => {
           this.coupons = response.data.coupons;
+
           this.isLoading = false;
         });
       },
@@ -242,16 +249,22 @@ export default {
       updateCoupon(tempCoupon) {
         if (this.isNew) {
           const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
+
           this.$http.post(url, { data: tempCoupon }).then((response) => {
             this.$httpMessageState(response,'新增優惠券');
+
             this.getCoupons();
+
             this.$refs.couponModal.hideModal();
           });
         } else {
           const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
+
           this.$http.put(url, { data: this.tempCoupon }).then((response) => {
             this.$httpMessageState(response,'新增優惠券');
+
             this.getCoupons();
+
             this.$refs.couponModal.hideModal();
           });
         }
@@ -259,11 +272,16 @@ export default {
 
       delCoupon() {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
+
         this.isLoading = true;
+
         this.$http.delete(url).then((response) => {
           this.$httpMessageState(response,'刪除優惠券');
+
           const delComponent = this.$refs.delModal;
+
           delComponent.hideModal();
+
           this.getCoupons();
         });
       }

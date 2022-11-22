@@ -52,7 +52,7 @@
     max-width: 100%;
     height: auto;
   }
-  
+
 /* 輪播控制項樣式 */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {

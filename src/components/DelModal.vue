@@ -12,6 +12,7 @@
         <div class="modal-body">
           您確定要刪除 <strong class="text-danger">{{ item.title }}</strong> 嗎?(刪除後將無法回復)
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             <i class="bi bi-x-circle-fill"></i> 取消

@@ -1,22 +1,18 @@
 <template>
-  <!-- 讀取視覺效果 -->
+    <!-- 讀取視覺效果 -->
   <Loading :active="isLoading">
     <div class="loadingio-spinner-spin-69aofg588hf"><div class="ldio-4g11ls18ra">
     <div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div>
     </div></div>
   </Loading>
 
-    <div class="container userPage">
+    <div class="my-5 row justify-content-center">
+      <!-- 購物車列表 -->
+      <div class="col-lg-6 col-md-12 col-sm-12 mb-5 px-4">
+        <h3 class="text-center mb-5">
+        確認訂購明細
+        </h3>
 
-      <div class="dropdown text-end mb-3">
-      <a type="button position-relative p-2" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-        <i class="bi bi-cart-fill"></i>
-      </a>
-      <div class="dropdown-menu p-2 overflow-auto">
-        <p class="text-center mt-2 mb-5">購物車清單</p>
-
-          <!-- 購物車列表 -->
-          <div class="col-md-12">
             <div class="sticky-top">
               <table class="table align-middle">
                 <thead>
@@ -79,60 +75,63 @@
               </button>
             </div>
           </div>
-          <button class="btn btn-primary mb-2 w-100" type="button" :disabled="cart.total === 0" @click.prevent="goInfo">結帳去</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-      <div class="row">
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12" v-for="item in products" :key="item.id">
-          <div class="card mb-4">
-            <div style="height: 350px; background-size: cover; 
-                        background-position: center;"
-                 :style="{backgroundImage: `url(${item.imageUrl})`}">
-            </div>
-
-            <div class="card-body text-center mt-2">
-              <h5 class="card-title">{{ item.title }}</h5>
-              <br>
-
-              <del class="h6" v-if="item.price">
-                市價 {{ item.origin_price }} 元
-              </del>
-              <br>
-
-              <p class="h5" v-if="item.price">
-                限時下殺 {{ item.price }} 元
-              </p>
-
-                <div class="btn-group btn-group-sm mt-3">
-                  <button type="button" class="btn btn-warning" @click.prevent="getProduct(item.id)">
-                    <i class="bi bi-box-arrow-up-right"></i> 商品詳情
-                  </button>
-
-                  <!-- 當 loadingItem 屬性中儲存的 id 與 此商品 id 一致時，按鈕呈現禁用狀態 -->
-                  <button type="button" class="btn btn-danger" @click.prevent="addCart(item.id)"
-                          :disabled="this.status.loadingItem === item.id">
-                          <div v-if="this.status.loadingItem === item.id" class="spinner-grow spinner-grow-sm text-primary" role="status">
-                          <span class="visually-hidden">Loading...</span>
-                          </div>
-                          <i class="bi bi-cart-plus"></i> 心動購買
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
+          </div>
+
+      <Form class="col-lg-6 col-md-12 col-sm-12 px-5" v-slot="{ errors }"  @submit="createOrder">
+        <h3 class="text-center mb-5">
+        填寫訂購人資訊
+        </h3>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email *</label>
+          <Field id="email" name="email" type="email" class="form-control"
+                   :class="{ 'is-invalid': errors['email'] }"
+                   placeholder="請輸入 Email" rules="email|required"
+                   v-model="form.user.email"></Field>
+          <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
         </div>
-      </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">訂購人姓名 *</label>
+          <Field id="name" name="姓名" type="text" class="form-control"
+                   :class="{ 'is-invalid': errors['姓名'] }"
+                   placeholder="請輸入姓名" rules="required"
+                   v-model="form.user.name"></Field>
+          <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="tel" class="form-label">訂購人電話 *</label>
+          <Field id="tel" name="電話" type="tel" class="form-control"
+                   :class="{ 'is-invalid': errors['電話'] }"
+                   placeholder="請輸入電話" rules="required"
+                   v-model="form.user.tel"></Field>
+          <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">訂購人地址 *</label>
+          <Field id="address" name="地址" type="text" class="form-control"
+                   :class="{ 'is-invalid': errors['地址'] }"
+                   placeholder="請輸入地址" rules="required"
+                   v-model="form.user.address"></Field>
+          <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="message" class="form-label">留言</label>
+          <textarea name="" id="message" class="form-control" cols="30" rows="10"
+                    v-model="form.message"></textarea>
+        </div>
+        <div class="text-end">
+          <button class="btn btn-primary">送出訂單</button>
+        </div>
+      </Form>
+    </div>
 </template>
 
 <style>
-/* 前台頁面內容樣式設定 */
-.userPage {
-    padding-top: 10px;
-  }
-
 /* 讀取視覺效果樣式 */
 @keyframes ldio-4g11ls18ra {
   0% {
@@ -266,56 +265,27 @@
 <script>
 export default {
     data() {
-      return {
-        products: [],
-        product: {},
-        status: {
-          // 對應品項 id
-          loadingItem: ''
-        },
-        cart: {},
-        coupon_code: ''
+        return {
+            cart: {},
+            coupon_code: '',
+            status: {
+            // 對應品項 id
+                loadingItem: ''
+            },
+            form: {
+              user: {
+                name: '',
+                email: '',
+                tel: '',
+                address: ''
+            },
+        message: ''
       }
+        }
     },
 
     methods: {
-      getProducts() {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
-
-        this.isLoading = true;
-
-        this.$http.get(url).then((response) => {
-          this.products = response.data.products;
-
-          this.isLoading = false;
-        })
-      },
-
-      getProduct(id) {
-        this.$router.push(`/user/product/${id}`);
-      },
-
-      addCart(id) {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-
-        // 按下心動購買的按鈕時，呈現讀取狀態
-        this.status.loadingItem = id;
-
-        const cart = {
-          product_id: id,
-          qty: 1
-        };
-
-        this.$http.post(url,{ data: cart })
-        .then((res) => {
-          // 加入購物車動作完成後，取消讀取狀態
-          this.status.loadingItem = '';
-
-          this.getCart();
-        })
-      },
-
-      removeCartItem(id) {
+    removeCartItem(id) {
       this.status.loadingItem = id;
 
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
@@ -333,7 +303,7 @@ export default {
       });
     },
 
-      updateCart(item) {
+    updateCart(item) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
 
       this.isLoading = true;
@@ -354,7 +324,7 @@ export default {
       })
       },
 
-      getCart() {
+    getCart() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
 
       this.isLoading = true;
@@ -366,7 +336,7 @@ export default {
       });
     },
 
-      addCouponCode() {
+    addCouponCode() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
 
       const coupon = {
@@ -384,16 +354,21 @@ export default {
       });
     },
 
-    goInfo() {
-			// 轉址到填寫個人資料頁面
-			this.$router.push('/user/information');
-		}
+    createOrder() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
+
+      const order = this.form;
+
+      this.$http.post(url,{ data: order }).then((res) => {
+          let orderId = res.data.orderId;
+
+          this.$router.push(`/user/checkout/${orderId}`);
+        });
+    }
     },
 
     created() {
-      this.getProducts();
-
       this.getCart();
     }
-  };
+};
 </script>

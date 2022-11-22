@@ -1,5 +1,5 @@
 <template>
-<indexLoginModal></indexLoginModal>
+<IndexLoginModal></IndexLoginModal>
 
 <nav class="navbar navbar-expand-lg navbar-light store-nav fixed-top">
   <div class="container-fluid px-5">
@@ -9,7 +9,7 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse justify-content-lg-end" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <router-link class="nav-link" to="/user/cart">商城</router-link>
@@ -23,9 +23,13 @@
 
 <style>
 /* 導覽列樣式設定 */
+.navbar {
+  --bs-navbar-toggler-border-color: MidnightBlue;
+}
+
 .store-nav {
     background: #ffffff;
-    box-shadow: 0 3px 3px #c0c0c0;
+    box-shadow: 0 3px 3px MidnightBlue;
     padding: 5px;
   }
 
@@ -33,6 +37,11 @@
 .navbar-icon {
     max-width: 140px;
   }
+
+/* 漢堡選單按下去之後的邊框顏色 */
+.navbar-toggler {
+  color: MidnightBlue;
+}
 
 /* icon hover特效 */
 .store-nav .navbar-icon:hover {
@@ -65,11 +74,11 @@
 </style>
 
 <script>
-import indexLoginModal from '@/components/indexLoginModal.vue';
+import IndexLoginModal from '@/components/IndexLoginModal.vue';
 
 export default {
   components: {
-    indexLoginModal
+    IndexLoginModal
   }
 };
 </script>
