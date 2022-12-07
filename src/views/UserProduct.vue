@@ -107,8 +107,7 @@
           <div class="input-group input-group-sm mb-3">
             <input type="number" class="form-control"
                    min="1"
-                   v-model.number="qty"
-                   placeholder="請填寫欲購買的數量">
+                   v-model.number="qty">
                    <div class="input-group-text">/ {{ product.unit }}</div>
           </div>
 
@@ -286,6 +285,7 @@
           loadingItem: ''
         },
         cart: {},
+        qty: 1,
         coupon_code: ''
       }
     },
