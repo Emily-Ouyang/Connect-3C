@@ -33,7 +33,7 @@
                 <td>
                   <button type="button" class="btn btn-outline-danger btn-sm"
                           :disabled="status.loadingItem === item.id"
-                          @click.prevent="removeCartItem(item.id)">
+                          @click="removeCartItem(item.id)">
                           <i class="bi bi-trash3-fill"></i>
                   </button>
                 </td>
@@ -74,12 +74,12 @@
           <div class="input-group mb-3 input-group-sm">
             <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" @click.prevent="addCouponCode">
+              <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">
                 套用優惠碼
               </button>
             </div>
           </div>
-          <button class="btn btn-primary mb-2 w-100" type="button" :disabled="cart.total === 0" @click.prevent="goInfo">結帳去</button>
+          <button class="btn btn-primary mb-2 w-100" type="button" :disabled="cart.total === 0" @click="goInfo">結帳去</button>
         </div>
       </div>
     </div>
@@ -107,12 +107,12 @@
               </p>
 
                 <div class="btn-group btn-group-sm mt-3">
-                  <button type="button" class="btn btn-warning" @click.prevent="getProduct(item.id)">
+                  <button type="button" class="btn btn-warning" @click="getProduct(item.id)">
                     <i class="bi bi-box-arrow-up-right"></i> 商品詳情
                   </button>
 
                   <!-- 當 loadingItem 屬性中儲存的 id 與 此商品 id 一致時，按鈕呈現禁用狀態 -->
-                  <button type="button" class="btn btn-danger" @click.prevent="addCart(item.id)"
+                  <button type="button" class="btn btn-danger" @click="addCart(item.id)"
                           :disabled="this.status.loadingItem === item.id">
                           <div v-if="this.status.loadingItem === item.id" class="spinner-grow spinner-grow-sm text-primary" role="status">
                           <span class="visually-hidden">Loading...</span>
@@ -126,6 +126,141 @@
         </div>
       </div>
 </template>
+
+<script>
+export default {
+    data() {
+      return {
+        products: [],
+        product: {},
+        status: {
+          // 對應品項 id
+          loadingItem: ''
+        },
+        cart: {},
+        coupon_code: ''
+      }
+    },
+
+    methods: {
+      getProducts() {
+        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+
+        this.isLoading = true;
+
+        this.$http.get(url).then((response) => {
+          this.products = response.data.products;
+
+          this.isLoading = false;
+        })
+      },
+
+      getProduct(id) {
+        this.$router.push(`/user/product/${id}`);
+      },
+
+      addCart(id) {
+        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+
+        // 按下心動購買的按鈕時，呈現讀取狀態
+        this.status.loadingItem = id;
+
+        const cart = {
+          product_id: id,
+          qty: 1
+        };
+
+        this.$http.post(url,{ data: cart })
+        .then((res) => {
+          // 加入購物車動作完成後，取消讀取狀態
+          this.status.loadingItem = '';
+
+          this.getCart();
+        })
+      },
+
+      removeCartItem(id) {
+      this.status.loadingItem = id;
+
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
+
+      this.isLoading = true;
+
+      this.$http.delete(url).then((response) => {
+        this.$httpMessageState(response,'移除購物車品項');
+
+        this.status.loadingItem = '';
+
+        this.getCart();
+
+        this.isLoading = false;
+      });
+    },
+
+      updateCart(item) {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+
+      this.isLoading = true;
+
+      this.status.loadingItem = item.id;
+
+      const cart = {
+        product_id: item.product_id,
+        qty: item.qty
+      };
+
+      this.$http.put(url,{ data: cart }).then((res) => {
+        this.status.loadingItem = '';
+
+        this.getCart();
+
+        this.isLoading = false;
+      })
+      },
+
+      getCart() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+
+      this.isLoading = true;
+
+      this.$http.get(url).then((response) => {
+        this.cart = response.data.data;
+
+        this.isLoading = false;
+      });
+    },
+
+      addCouponCode() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+
+      const coupon = {
+        code: this.coupon_code,
+      };
+
+      this.isLoading = true;
+
+      this.$http.post(url,{ data: coupon }).then((response) => {
+        this.$httpMessageState(response,'套用優惠碼');
+
+        this.getCart();
+
+        this.isLoading = false;
+      });
+    },
+
+    goInfo() {
+			// 轉址到填寫個人資料頁面
+			this.$router.push('/user/information');
+		}
+    },
+
+    created() {
+      this.getProducts();
+
+      this.getCart();
+    }
+  };
+</script>
 
 <style>
 /* 前台頁面內容樣式設定 */
@@ -262,138 +397,3 @@
 
 .ldio-4g11ls18ra div { box-sizing: content-box; }
 </style>
-
-<script>
-export default {
-    data() {
-      return {
-        products: [],
-        product: {},
-        status: {
-          // 對應品項 id
-          loadingItem: ''
-        },
-        cart: {},
-        coupon_code: ''
-      }
-    },
-
-    methods: {
-      getProducts() {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
-
-        this.isLoading = true;
-
-        this.$http.get(url).then((response) => {
-          this.products = response.data.products;
-
-          this.isLoading = false;
-        })
-      },
-
-      getProduct(id) {
-        this.$router.push(`/user/product/${id}`);
-      },
-
-      addCart(id) {
-        const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-
-        // 按下心動購買的按鈕時，呈現讀取狀態
-        this.status.loadingItem = id;
-
-        const cart = {
-          product_id: id,
-          qty: 1
-        };
-
-        this.$http.post(url,{ data: cart })
-        .then((res) => {
-          // 加入購物車動作完成後，取消讀取狀態
-          this.status.loadingItem = '';
-
-          this.getCart();
-        })
-      },
-
-      removeCartItem(id) {
-      this.status.loadingItem = id;
-
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
-
-      this.isLoading = true;
-
-      this.$http.delete(url).then((response) => {
-        this.$httpMessageState(response,'移除購物車品項');
-
-        this.status.loadingItem = '';
-
-        this.getCart();
-
-        this.isLoading = false;
-      });
-    },
-
-      updateCart(item) {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
-
-      this.isLoading = true;
-
-      this.status.loadingItem = item.id;
-
-      const cart = {
-        product_id: item.product_id,
-        qty: item.qty
-      };
-
-      this.$http.put(url,{ data: cart }).then((res) => {
-        this.status.loadingItem = '';
-
-        this.getCart();
-
-        this.isLoading = false;
-      })
-      },
-
-      getCart() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-
-      this.isLoading = true;
-
-      this.$http.get(url).then((response) => {
-        this.cart = response.data.data;
-
-        this.isLoading = false;
-      });
-    },
-
-      addCouponCode() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
-
-      const coupon = {
-        code: this.coupon_code,
-      };
-
-      this.isLoading = true;
-
-      this.$http.post(url,{ data: coupon }).then((response) => {
-        this.$httpMessageState(response,'套用優惠碼');
-
-        this.getCart();
-
-        this.isLoading = false;
-      });
-    },
-
-    goInfo() {
-			// 轉址到填寫個人資料頁面
-			this.$router.push('/user/information');
-		}
-    },
-
-    created() {
-      this.getProducts();
-
-      this.getCart();
-    }
-  };
-</script>

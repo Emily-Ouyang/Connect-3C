@@ -43,11 +43,11 @@
 
       <td>
         <div class="btn-group">
-          <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">
+          <button type="button" class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">
             <i class="bi bi-pencil-square"></i>
           </button>
 
-          <button class="btn btn-outline-danger btn-sm" @click="openDelProductModal(item)">
+          <button type="button" class="btn btn-outline-danger btn-sm" @click="openDelProductModal(item)">
             <i class="bi bi-trash"></i>
           </button>
         </div>
@@ -60,137 +60,6 @@
 <ProductModal ref="productModal" :product="tempProduct" @update-product="updateProduct"></ProductModal>
 <DelModal :item="tempProduct" ref="delModal" @del-item="delProduct"></DelModal>
 </template>
-
-<style>
-/* 讀取視覺效果樣式 */
-@keyframes ldio-4g11ls18ra {
-  0% {
-    opacity: 1;
-    backface-visibility: hidden;
-    transform: translateZ(0) scale(1.5,1.5);
-  } 100% {
-    opacity: 0;
-    backface-visibility: hidden;
-    transform: translateZ(0) scale(1,1);
-  }
-}
-
-.ldio-4g11ls18ra div > div {
-  position: absolute;
-  width: 8.8px;
-  height: 8.8px;
-  border-radius: 50%;
-  background: #292664;
-  animation: ldio-4g11ls18ra 1s linear infinite;
-}
-
-.ldio-4g11ls18ra div:nth-child(1) > div {
-  left: 87px;
-  top: 51.00000000000001px;
-  animation-delay: -0.875s;
-}
-
-.ldio-4g11ls18ra > div:nth-child(1) {
-  transform: rotate(0deg);
-  transform-origin: 91.4px 55.400000000000006px;
-}
-
-.ldio-4g11ls18ra div:nth-child(2) > div {
-  left: 76px;
-  top: 76px;
-  animation-delay: -0.75s;
-}
-
-.ldio-4g11ls18ra > div:nth-child(2) {
-  transform: rotate(45deg);
-  transform-origin: 80.4px 80.4px;
-}
-
-.ldio-4g11ls18ra div:nth-child(3) > div {
-  left: 51.00000000000001px;
-  top: 87px;
-  animation-delay: -0.625s;
-}
-
-.ldio-4g11ls18ra > div:nth-child(3) {
-  transform: rotate(90deg);
-  transform-origin: 55.400000000000006px 91.4px;
-}
-
-.ldio-4g11ls18ra div:nth-child(4) > div {
-  left: 25.000000000000007px;
-  top: 76px;
-  animation-delay: -0.5s;
-}
-
-.ldio-4g11ls18ra > div:nth-child(4) {
-  transform: rotate(135deg);
-  transform-origin: 29.400000000000006px 80.4px;
-}
-
-.ldio-4g11ls18ra div:nth-child(5) > div {
-  left: 14.000000000000007px;
-  top: 51.00000000000001px;
-  animation-delay: -0.375s;
-}
-
-.ldio-4g11ls18ra > div:nth-child(5) {
-  transform: rotate(180deg);
-  transform-origin: 18.400000000000006px 55.400000000000006px;
-}
-
-.ldio-4g11ls18ra div:nth-child(6) > div {
-  left: 25.000000000000007px;
-  top: 25.000000000000007px;
-  animation-delay: -0.25s;
-}
-
-.ldio-4g11ls18ra > div:nth-child(6) {
-  transform: rotate(225deg);
-  transform-origin: 29.400000000000006px 29.400000000000006px;
-}
-
-.ldio-4g11ls18ra div:nth-child(7) > div {
-  left: 51.00000000000001px;
-  top: 14.000000000000007px;
-  animation-delay: -0.125s;
-}
-
-.ldio-4g11ls18ra > div:nth-child(7) {
-  transform: rotate(270deg);
-  transform-origin: 55.400000000000006px 18.400000000000006px;
-}
-
-.ldio-4g11ls18ra div:nth-child(8) > div {
-  left: 76px;
-  top: 25.000000000000007px;
-  animation-delay: 0s;
-}
-
-.ldio-4g11ls18ra > div:nth-child(8) {
-  transform: rotate(315deg);
-  transform-origin: 80.4px 29.400000000000006px;
-}
-
-.loadingio-spinner-spin-69aofg588hf {
-  width: 110px;
-  height: 110px;
-  display: inline-block;
-  overflow: hidden;
-  background: rgba(NaN, NaN, NaN, 0);
-}
-
-.ldio-4g11ls18ra {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform: translateZ(0) scale(1);
-  backface-visibility: hidden;
-  transform-origin: 0 0;
-}
-
-.ldio-4g11ls18ra div { box-sizing: content-box; }
-</style>
 
 <script>
 import Pagination from '@/components/Pagination.vue';
@@ -357,3 +226,134 @@ export default {
     }
 };
 </script>
+
+<style>
+/* 讀取視覺效果樣式 */
+@keyframes ldio-4g11ls18ra {
+  0% {
+    opacity: 1;
+    backface-visibility: hidden;
+    transform: translateZ(0) scale(1.5,1.5);
+  } 100% {
+    opacity: 0;
+    backface-visibility: hidden;
+    transform: translateZ(0) scale(1,1);
+  }
+}
+
+.ldio-4g11ls18ra div > div {
+  position: absolute;
+  width: 8.8px;
+  height: 8.8px;
+  border-radius: 50%;
+  background: #292664;
+  animation: ldio-4g11ls18ra 1s linear infinite;
+}
+
+.ldio-4g11ls18ra div:nth-child(1) > div {
+  left: 87px;
+  top: 51.00000000000001px;
+  animation-delay: -0.875s;
+}
+
+.ldio-4g11ls18ra > div:nth-child(1) {
+  transform: rotate(0deg);
+  transform-origin: 91.4px 55.400000000000006px;
+}
+
+.ldio-4g11ls18ra div:nth-child(2) > div {
+  left: 76px;
+  top: 76px;
+  animation-delay: -0.75s;
+}
+
+.ldio-4g11ls18ra > div:nth-child(2) {
+  transform: rotate(45deg);
+  transform-origin: 80.4px 80.4px;
+}
+
+.ldio-4g11ls18ra div:nth-child(3) > div {
+  left: 51.00000000000001px;
+  top: 87px;
+  animation-delay: -0.625s;
+}
+
+.ldio-4g11ls18ra > div:nth-child(3) {
+  transform: rotate(90deg);
+  transform-origin: 55.400000000000006px 91.4px;
+}
+
+.ldio-4g11ls18ra div:nth-child(4) > div {
+  left: 25.000000000000007px;
+  top: 76px;
+  animation-delay: -0.5s;
+}
+
+.ldio-4g11ls18ra > div:nth-child(4) {
+  transform: rotate(135deg);
+  transform-origin: 29.400000000000006px 80.4px;
+}
+
+.ldio-4g11ls18ra div:nth-child(5) > div {
+  left: 14.000000000000007px;
+  top: 51.00000000000001px;
+  animation-delay: -0.375s;
+}
+
+.ldio-4g11ls18ra > div:nth-child(5) {
+  transform: rotate(180deg);
+  transform-origin: 18.400000000000006px 55.400000000000006px;
+}
+
+.ldio-4g11ls18ra div:nth-child(6) > div {
+  left: 25.000000000000007px;
+  top: 25.000000000000007px;
+  animation-delay: -0.25s;
+}
+
+.ldio-4g11ls18ra > div:nth-child(6) {
+  transform: rotate(225deg);
+  transform-origin: 29.400000000000006px 29.400000000000006px;
+}
+
+.ldio-4g11ls18ra div:nth-child(7) > div {
+  left: 51.00000000000001px;
+  top: 14.000000000000007px;
+  animation-delay: -0.125s;
+}
+
+.ldio-4g11ls18ra > div:nth-child(7) {
+  transform: rotate(270deg);
+  transform-origin: 55.400000000000006px 18.400000000000006px;
+}
+
+.ldio-4g11ls18ra div:nth-child(8) > div {
+  left: 76px;
+  top: 25.000000000000007px;
+  animation-delay: 0s;
+}
+
+.ldio-4g11ls18ra > div:nth-child(8) {
+  transform: rotate(315deg);
+  transform-origin: 80.4px 29.400000000000006px;
+}
+
+.loadingio-spinner-spin-69aofg588hf {
+  width: 110px;
+  height: 110px;
+  display: inline-block;
+  overflow: hidden;
+  background: rgba(NaN, NaN, NaN, 0);
+}
+
+.ldio-4g11ls18ra {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+}
+
+.ldio-4g11ls18ra div { box-sizing: content-box; }
+</style>

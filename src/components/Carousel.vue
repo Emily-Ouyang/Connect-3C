@@ -29,6 +29,22 @@
 </div>
 </template>
 
+<script>
+import Carousel from 'bootstrap/js/dist/carousel';
+
+export default {
+    data() {
+        return {
+            storeCarousel: {}
+        }
+    },
+
+    mounted() {
+        this.storeCarousel = new Carousel(this.$refs.storeCarousel,{interval:1000});
+    }
+};
+</script>
+
 <style>
 /* 輪播區塊向下推125px，避免輪播圖被navbar遮擋到 */
 .index-carousel {
@@ -86,19 +102,3 @@
       }
   }
 </style>
-
-<script>
-import Carousel from 'bootstrap/js/dist/carousel';
-
-export default {
-    data() {
-        return {
-            storeCarousel: {}
-        }
-    },
-
-    mounted() {
-        this.storeCarousel = new Carousel(this.$refs.storeCarousel,{interval:1000});
-    }
-};
-</script>

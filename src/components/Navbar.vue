@@ -20,6 +20,28 @@
 </nav>
 </template>
 
+<script>
+export default {
+    methods: {
+        logout() {
+            // 執行登出功能
+            // API路徑
+            const api = `${process.env.VUE_APP_API}logout`;
+
+            // 送出API
+            this.$http.post(api,this.user)
+            .then((res) => {
+				// 假設登出成功時
+				if(res.data.success) {
+                    // 轉址回登入頁面
+                    this.$router.push('/login');
+				}
+            });
+        }
+    }
+};
+</script>
+
 <style>
 /* 導覽列樣式設定 */
 .store-nav {
@@ -62,25 +84,3 @@
       }
   }
 </style>
-
-<script>
-export default {
-    methods: {
-        logout() {
-            // 執行登出功能
-            // API路徑
-            const api = `${process.env.VUE_APP_API}logout`;
-
-            // 送出API
-            this.$http.post(api,this.user)
-            .then((res) => {
-				// 假設登出成功時
-				if(res.data.success) {
-                    // 轉址回登入頁面
-                    this.$router.push('/login');
-				}
-            });
-        }
-    }
-};
-</script>

@@ -12,26 +12,6 @@
     </div>
 </template>
 
-<style>
-/* 背景圖片樣式設定 */
-.wrap {
-    background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
-    /* 固定背景圖(當頁面滾動時，視覺上會有交錯的效果) */
-    background-attachment: fixed;
-  }
-
-/* 優惠碼公告區塊樣式設定 */
-.coupon-bar {
-  padding-top: 125px;
-}
-
-/* 購物車圖示 */
-.bi-cart-fill {
-    font-size: 25px;
-    color: MidnightBlue;
-  }
-</style>
-
 <script>
 import emitter from '@/methods/emitter';
 import NavbarFront from '@/components/NavbarFront.vue';
@@ -52,3 +32,23 @@ export default {
       }
     };
 </script>
+
+<style>
+/* 背景圖片樣式設定 */
+.wrap {
+    background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
+    /* 固定背景圖(當頁面滾動時，視覺上會有交錯的效果) */
+    background-attachment: fixed;
+  }
+
+/* 優惠碼公告區塊樣式設定 */
+.coupon-bar {
+  padding-top: 125px;
+}
+
+/* 購物車圖示 */
+.bi-cart-fill {
+    font-size: 25px;
+    color: MidnightBlue;
+  }
+</style>

@@ -6,12 +6,6 @@
     </div>
 </template>
 
-<style>
-.toast-container {
-  z-index: 1090;
-}
-</style>
-
 <script>
 import Toast from '@/components/Toast.vue';
 
@@ -40,3 +34,9 @@ export default {
     }
   };
 </script>
+
+<style>
+.toast-container {
+  z-index: 1090;
+}
+</style>

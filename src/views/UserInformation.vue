@@ -29,7 +29,7 @@
                 <td>
                   <button type="button" class="btn btn-outline-danger btn-sm"
                           :disabled="status.loadingItem === item.id"
-                          @click.prevent="removeCartItem(item.id)">
+                          @click="removeCartItem(item.id)">
                           <i class="bi bi-trash3-fill"></i>
                   </button>
                 </td>
@@ -70,7 +70,7 @@
           <div class="input-group mb-3 input-group-sm">
             <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" @click.prevent="addCouponCode">
+              <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">
                 套用優惠碼
               </button>
             </div>
@@ -125,11 +125,122 @@
                     v-model="form.message"></textarea>
         </div>
         <div class="text-end">
-          <button class="btn btn-primary">送出訂單</button>
+          <button type="button" class="btn btn-primary">送出訂單</button>
         </div>
       </Form>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            cart: {},
+            coupon_code: '',
+            status: {
+            // 對應品項 id
+                loadingItem: ''
+            },
+            form: {
+              user: {
+                name: '',
+                email: '',
+                tel: '',
+                address: ''
+            },
+        message: ''
+      }
+        }
+    },
+
+    methods: {
+    removeCartItem(id) {
+      this.status.loadingItem = id;
+
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
+
+      this.isLoading = true;
+
+      this.$http.delete(url).then((response) => {
+        this.$httpMessageState(response,'移除購物車品項');
+
+        this.status.loadingItem = '';
+
+        this.getCart();
+
+        this.isLoading = false;
+      });
+    },
+
+    updateCart(item) {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+
+      this.isLoading = true;
+
+      this.status.loadingItem = item.id;
+
+      const cart = {
+        product_id: item.product_id,
+        qty: item.qty
+      };
+
+      this.$http.put(url,{ data: cart }).then(() => {
+        this.status.loadingItem = '';
+
+        this.getCart();
+
+        this.isLoading = false;
+      })
+      },
+
+    getCart() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+
+      this.isLoading = true;
+
+      this.$http.get(url).then((response) => {
+        this.cart = response.data.data;
+
+        this.isLoading = false;
+      });
+    },
+
+    addCouponCode() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+
+      const coupon = {
+        code: this.coupon_code,
+      };
+
+      this.isLoading = true;
+
+      this.$http.post(url,{ data: coupon }).then((response) => {
+        this.$httpMessageState(response,'套用優惠碼');
+
+        this.getCart();
+
+        this.isLoading = false;
+      });
+    },
+
+    createOrder() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
+
+      const order = this.form;
+
+      this.$http.post(url,{ data: order }).then((res) => {
+          let orderId = res.data.orderId;
+
+          this.$router.push(`/user/checkout/${orderId}`);
+        });
+    }
+    },
+
+    created() {
+      this.getCart();
+    }
+};
+</script>
 
 <style>
 /* 讀取視覺效果樣式 */
@@ -261,114 +372,3 @@
 
 .ldio-4g11ls18ra div { box-sizing: content-box; }
 </style>
-
-<script>
-export default {
-    data() {
-        return {
-            cart: {},
-            coupon_code: '',
-            status: {
-            // 對應品項 id
-                loadingItem: ''
-            },
-            form: {
-              user: {
-                name: '',
-                email: '',
-                tel: '',
-                address: ''
-            },
-        message: ''
-      }
-        }
-    },
-
-    methods: {
-    removeCartItem(id) {
-      this.status.loadingItem = id;
-
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
-
-      this.isLoading = true;
-
-      this.$http.delete(url).then((response) => {
-        this.$httpMessageState(response,'移除購物車品項');
-
-        this.status.loadingItem = '';
-
-        this.getCart();
-
-        this.isLoading = false;
-      });
-    },
-
-    updateCart(item) {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
-
-      this.isLoading = true;
-
-      this.status.loadingItem = item.id;
-
-      const cart = {
-        product_id: item.product_id,
-        qty: item.qty
-      };
-
-      this.$http.put(url,{ data: cart }).then((res) => {
-        this.status.loadingItem = '';
-
-        this.getCart();
-
-        this.isLoading = false;
-      })
-      },
-
-    getCart() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-
-      this.isLoading = true;
-
-      this.$http.get(url).then((response) => {
-        this.cart = response.data.data;
-
-        this.isLoading = false;
-      });
-    },
-
-    addCouponCode() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
-
-      const coupon = {
-        code: this.coupon_code,
-      };
-
-      this.isLoading = true;
-
-      this.$http.post(url,{ data: coupon }).then((response) => {
-        this.$httpMessageState(response,'套用優惠碼');
-
-        this.getCart();
-
-        this.isLoading = false;
-      });
-    },
-
-    createOrder() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
-
-      const order = this.form;
-
-      this.$http.post(url,{ data: order }).then((res) => {
-          let orderId = res.data.orderId;
-
-          this.$router.push(`/user/checkout/${orderId}`);
-        });
-    }
-    },
-
-    created() {
-      this.getCart();
-    }
-};
-</script>

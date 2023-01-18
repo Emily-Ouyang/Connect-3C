@@ -26,13 +26,13 @@
     </div>
 
     <div class="d-grid gap-2 col-6 mx-auto text-center mt-5">
-			<button class="btn btn-primary" @click.prevent="goCart">
+			<button type="button" class="btn btn-primary" @click="goCart">
 				<i class="bi bi-cart3"></i> 繼續購物
 		    </button>
 	    </div>
 
 		<div class="d-grid gap-2 col-6 mx-auto text-center mt-4">
-			<button class="btn btn-primary" @click.prevent="goBack">
+			<button type="button" class="btn btn-primary" @click="goBack">
 				<i class="bi bi-arrow-clockwise"></i> 返回首頁
 		    </button>
 	    </div>

@@ -53,7 +53,7 @@
 	    </div>
 
 		<div class="d-grid gap-2 col-6 mx-auto text-center mt-4">
-			<button class="btn btn-primary" @click.prevent="goBack">
+			<button type="button" class="btn btn-primary" @click="goBack">
 				<i class="bi bi-arrow-clockwise"></i> 返回首頁
 		    </button>
 	    </div>
@@ -62,23 +62,6 @@
 </div>
 </div>
 </template>
-
-<style>
-/* 背景圖片 */
-.login-wrap {
-    background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
-    }
-
-/* 清除超連結底線 */
-.forget {
-    text-decoration: none;
-    }
-
-/* 按鈕hover特效(透明度改為0.8) */
-.btn-primary:hover {
-    opacity: 0.8;
-	}
-</style>
 
 <script>
 export default {
@@ -119,3 +102,20 @@ export default {
     }
 };
 </script>
+
+<style>
+/* 背景圖片 */
+.login-wrap {
+    background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
+    }
+
+/* 清除超連結底線 */
+.forget {
+    text-decoration: none;
+    }
+
+/* 按鈕hover特效(透明度改為0.8) */
+.btn-primary:hover {
+    opacity: 0.8;
+	}
+</style>

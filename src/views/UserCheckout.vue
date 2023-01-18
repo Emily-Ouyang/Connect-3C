@@ -62,12 +62,59 @@
         </table>
 
         <div class="text-end">
-          <button class="btn btn-primary" v-if="order.is_paid === false">立即付款</button>
-          <button class="btn btn-primary" v-else @click.prevent="goSuccess">完成訂購</button>
+          <button type="button" class="btn btn-primary" v-if="order.is_paid === false">立即付款</button>
+          <button type="button" class="btn btn-primary" v-else @click="goSuccess">完成訂購</button>
         </div>
       </form>
     </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      order: {
+        user: {}
+      },
+      orderId: '',
+      isLoading: false
+    }
+  },
+
+  methods: {
+    getOrder() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${this.orderId}`;
+
+      this.$http.get(url).then((res) => {
+          if (res.data.success) {
+            this.order = res.data.order;
+          }
+        });
+    },
+
+    payOrder() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.orderId}`;
+
+      this.$http.post(url).then((res) => {
+          if (res.data.success) {
+            this.getOrder();
+          }
+        });
+    },
+
+    goSuccess() {
+			// 轉址到訂購完成頁面
+			this.$router.push('/user/success');
+		}
+  },
+
+  created() {
+    this.orderId = this.$route.params.orderId;
+
+    this.getOrder();
+  }
+};
+</script>
 
 <style>
 /* 讀取視覺效果樣式 */
@@ -199,50 +246,3 @@
 
 .ldio-4g11ls18ra div { box-sizing: content-box; }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      order: {
-        user: {}
-      },
-      orderId: '',
-      isLoading: false
-    }
-  },
-
-  methods: {
-    getOrder() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${this.orderId}`;
-
-      this.$http.get(url).then((res) => {
-          if (res.data.success) {
-            this.order = res.data.order;
-          }
-        });
-    },
-
-    payOrder() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.orderId}`;
-
-      this.$http.post(url).then((res) => {
-          if (res.data.success) {
-            this.getOrder();
-          }
-        });
-    },
-
-    goSuccess() {
-			// 轉址到訂購完成頁面
-			this.$router.push('/user/success');
-		}
-  },
-
-  created() {
-    this.orderId = this.$route.params.orderId;
-
-    this.getOrder();
-  }
-};
-</script>

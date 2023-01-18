@@ -21,6 +21,16 @@
 </nav>
 </template>
 
+<script>
+import IndexLoginModal from '@/components/IndexLoginModal.vue';
+
+export default {
+  components: {
+    IndexLoginModal
+  }
+};
+</script>
+
 <style>
 /* 導覽列樣式設定 */
 .navbar {
@@ -72,13 +82,3 @@
         }
     }
 </style>
-
-<script>
-import IndexLoginModal from '@/components/IndexLoginModal.vue';
-
-export default {
-  components: {
-    IndexLoginModal
-  }
-};
-</script>
